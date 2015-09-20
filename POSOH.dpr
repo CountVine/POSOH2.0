@@ -3,12 +3,12 @@ program POSOH;
 uses
   System.StartUpCopy,
   FMX.Forms,
-  main in 'main.pas' {Form2};
+  main in 'main.pas' {MainFrm};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TMainFrm, MainFrm);
   Application.Run;
 end.
