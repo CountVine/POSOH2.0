@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Menus, IniFiles, Windows,
   FMX.ListBox, FMX.Layouts, FMX.TreeView, FMX.Objects, System.Math.Vectors,
-  FMX.Colors;
+  FMX.Colors, System.ImageList, FMX.ImgList;
 
 type
   TMainFrm = class(TForm)
@@ -18,7 +18,6 @@ type
     FileNewMI: TMenuItem;
     FileOpenMI: TMenuItem;
     SaveDialog: TSaveDialog;
-    StyleBook1: TStyleBook;
     Panel1: TPanel;
     Properties: TLayout;
     TreeView1: TTreeView;
@@ -34,7 +33,7 @@ type
     TreeViewItem10: TTreeViewItem;
     TreeViewItem11: TTreeViewItem;
     TreeViewItem12: TTreeViewItem;
-    SizeChanger: TPanel;
+    SizeChangerLeft: TPanel;
     ObjectProperties: TFramedScrollBox;
     TreeView: TFramedScrollBox;
     Label1: TLabel;
@@ -43,15 +42,34 @@ type
     TreeViewItem14: TTreeViewItem;
     TreeViewItem15: TTreeViewItem;
     TreeViewItem16: TTreeViewItem;
+    SetOfObjects: TFramedVertScrollBox;
+    Label3: TLabel;
+    Layout1: TLayout;
+    SizeChangerRight: TPanel;
+    FramedScrollBox1: TFramedScrollBox;
+    Label4: TLabel;
+    Layout2: TLayout;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    MiddlePanel: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    ToolBar1: TToolBar;
+    ListBox1: TListBox;
+    ImageList1: TImageList;
+    ListBoxItem3: TListBoxItem;
+    StyleBook1: TStyleBook;
     procedure SaveDialogClose(Sender: TObject);
     procedure FileNewMIClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure SizeChangerMouseDown(Sender: TObject; Button: TMouseButton;
+    procedure SizeChangerLeftMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
-    procedure SizeChangerMouseMove(Sender: TObject; Shift: TShiftState; X,
+    procedure SizeChangerLeftMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Single);
-    procedure SizeChangerMouseUp(Sender: TObject; Button: TMouseButton;
+    procedure SizeChangerLeftMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,6 +82,7 @@ var
   PathToEXE: string;
   IsLMBPressed : boolean = false;
   StartPos:TPointF;
+  FormMinHeight,FormMinWidth: integer;
 implementation
 
 {$R *.fmx}
@@ -85,8 +104,25 @@ end;
 
 procedure TMainFrm.FormCreate(Sender: TObject);
 begin
-  SizeChanger.AutoCapture:=true;
+  SizeChangerLeft.AutoCapture:=true;
+  SizeChangerRight.AutoCapture:=true;
   PathToEXE:=ExtractFilePath(ParamStr(0));
+  FormMinHeight:=550;
+  FormMinWidth:=760;
+end;
+
+procedure TMainFrm.FormResize(Sender: TObject);
+begin
+  if MainFrm.Width<FormMinWidth then
+   begin
+    Mouse_Event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+    MainFrm.Width:=FormMinWidth;
+   end;
+   if MainFrm.Height<FormMinHeight then
+   begin
+    Mouse_Event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+    MainFrm.Height:=FormMinHeight;
+   end;
 end;
 
 procedure TMainFrm.SaveDialogClose(Sender: TObject);
@@ -122,44 +158,50 @@ begin
 end;
 
 
-procedure TMainFrm.SizeChangerMouseDown(Sender: TObject; Button: TMouseButton;
+procedure TMainFrm.SizeChangerLeftMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
-SizeChanger.Align:=TAlignLayout(0);
+(Sender as TPanel).Align:=TAlignLayout(0);
 StartPos := TPointF.Create(X, Y);
 IsLMBPressed:=true;
 end;
 
-procedure TMainFrm.SizeChangerMouseMove(Sender: TObject; Shift: TShiftState; X,
+procedure TMainFrm.SizeChangerLeftMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Single);
   var
  MoveVector: TVector;
 begin
 if IsLMBPressed then
   begin
-    MoveVector := TVector.Create(0, Y - StartPos.Y, 0);
-    MoveVector := SizeChanger.LocalToAbsoluteVector(MoveVector);
-    MoveVector := SizeChanger.ParentControl.AbsoluteToLocalVector(MoveVector);
-    SizeChanger.Position.Point := SizeChanger.Position.Point + TPointF(MoveVector);
+       MoveVector := TVector.Create(0, Y - StartPos.Y, 0);
+       MoveVector := (Sender as TPanel).LocalToAbsoluteVector(MoveVector);
+       MoveVector := (Sender as TPanel).ParentControl.AbsoluteToLocalVector(MoveVector);
+       (Sender as TPanel).Position.Point := (Sender as TPanel).Position.Point + TPointF(MoveVector);
   end;
 end;
 
-procedure TMainFrm.SizeChangerMouseUp(Sender: TObject; Button: TMouseButton;
+procedure TMainFrm.SizeChangerLeftMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
   IsLMBPressed:=false;
-  if SizeChanger.Position.Y<MainFrm.ClientHeight-SizeChanger.Size.Height-150 then
+  if (Sender as TPanel).Position.Y<MainFrm.ClientHeight-(Sender as TPanel).Size.Height-150 then
     begin
-      if SizeChanger.Position.Y<150 then
+      if (Sender as TPanel).Position.Y<150 then
        begin
-        TreeView.Height:=150;
+        if (Sender as TPanel).Name='SizeChangerLeft' then
+          TreeView.Height:=150 else
+          SetOfObjects.Height:=150;
        end else
-        TreeView.Height:=SizeChanger.Position.Y;
+        if (Sender as TPanel).Name='SizeChangerLeft' then
+          TreeView.Height:=(Sender as TPanel).Position.Y else
+          SetOfObjects.Height:=(Sender as TPanel).Position.Y;
     end else
     begin
-      TreeView.Height:=MainFrm.ClientHeight-SizeChanger.Size.Height-150;
+      if (Sender as TPanel).Name='SizeChangerLeft' then
+        TreeView.Height:=MainFrm.ClientHeight-(Sender as TPanel).Size.Height-150 else
+        SetOfObjects.Height:=MainFrm.ClientHeight-(Sender as TPanel).Size.Height-150;
     end;
-    SizeChanger.Align:=TAlignLayout(1);
+    (Sender as TPanel).Align:=TAlignLayout(1);
 end;
 
 end.
