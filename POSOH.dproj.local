@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.732,C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\main.pas=C:\Users\object37\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.732,C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\main.fmx=C:\Users\object37\Documents\Embarcadero\Studio\Projects\Unit2.fmx</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.142,=C:\Users\object37\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.096,C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\POSOH.dproj=C:\Users\object37\Documents\Embarcadero\Studio\Projects\Project3.dproj</Transaction>
+    <Transaction>2015.09.22 21:28:12.498,=C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\Unit1.pas</Transaction>
+    <Transaction>2015.09.22 21:28:37.022,C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\FMX.ConstrainedForm.pas=C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\Unit1.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>
