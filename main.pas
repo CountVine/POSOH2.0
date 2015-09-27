@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Menus, IniFiles, Windows,
   FMX.ListBox, FMX.Layouts, FMX.TreeView, FMX.Objects, System.Math.Vectors,
-  FMX.Colors, System.ImageList, FMX.ImgList;
+  FMX.Colors, System.ImageList, FMX.ImgList,VarDialog, System.Generics.Collections;
 
 type
   TMainFrm = class(TForm)
@@ -60,6 +60,10 @@ type
     ImageList1: TImageList;
     ListBoxItem3: TListBoxItem;
     StyleBook1: TStyleBook;
+    Variables: TLayout;
+    Button4: TButton;
+    Button6: TButton;
+    ListBox2: TListBox;
     procedure SaveDialogClose(Sender: TObject);
     procedure FileNewMIClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -70,6 +74,7 @@ type
     procedure SizeChangerLeftMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
     procedure FormResize(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,6 +96,12 @@ implementation
 
 
 
+
+procedure TMainFrm.Button4Click(Sender: TObject);
+begin
+ DialogFrm.ShowModal;
+
+end;
 
 procedure TMainFrm.FileNewMIClick(Sender: TObject);
 var IniFile: TIniFile;

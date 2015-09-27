@@ -2,13 +2,11 @@ inherited Form2_Windows: TForm2_Windows
   DesignerMasterStyle = 0
   inherited Panel1: TPanel
     inherited Properties: TLayout
-      inherited SizeChangerLeft: TPanel [0]
-      end
-      inherited ObjectProperties: TFramedScrollBox [1]
+      inherited ObjectProperties: TFramedScrollBox
         Viewport.Width = 205.000000000000000000
         Viewport.Height = 181.000000000000000000
       end
-      inherited TreeView: TFramedScrollBox [2]
+      inherited TreeView: TFramedScrollBox
         Viewport.Width = 205.000000000000000000
         Viewport.Height = 326.000000000000000000
         inherited TreeView1: TTreeView
@@ -32,11 +30,13 @@ inherited Form2_Windows: TForm2_Windows
           Viewport.Height = 263.000000000000000000
         end
       end
-      inherited SizeChangerRight: TPanel [1]
-      end
-      inherited FramedScrollBox1: TFramedScrollBox [2]
+      inherited FramedScrollBox1: TFramedScrollBox
         Viewport.Width = 205.000000000000000000
         Viewport.Height = 214.000000000000000000
+        inherited ListBox2: TListBox
+          Viewport.Width = 195.000000000000000000
+          Viewport.Height = 161.000000000000000000
+        end
       end
     end
     inherited MiddlePanel: TPanel
@@ -45,9 +45,5 @@ inherited Form2_Windows: TForm2_Windows
         Size.Height = 315.000000000000000000
       end
     end
-  end
-  inherited StyleBook1: TStyleBook [4]
-  end
-  inherited ImageList1: TImageList [5]
   end
 end
