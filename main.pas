@@ -75,11 +75,17 @@ type
       Shift: TShiftState; X, Y: Single);
     procedure FormResize(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+
   private
     { Private declarations }
   public
     { Public declarations }
   end;
+  Float = record
+    nominator:integer;
+    denominator:integer;
+  end;
+  VarType = (DInt,DFloat,DDecimal,DString);
 const
   FilePath = 'C:\Users\object37\Documents\Embarcadero\Studio\Projects\POSOH2.0\TestFiles\file1.ptf';
 var
@@ -88,8 +94,12 @@ var
   IsLMBPressed : boolean = false;
   StartPos:TPointF;
   FormMinHeight,FormMinWidth: integer;
+  StringDict: TDictionary<String,String>;
+  IntDict: TDictionary<String,Integer>;
+  DecimalDict: TDictionary<String,double>;
+  FloatDict: TDictionary<String,Float>;
 implementation
-
+uses test;
 {$R *.fmx}
 {$R *.Windows.fmx MSWINDOWS}
 
@@ -120,6 +130,10 @@ begin
   PathToEXE:=ExtractFilePath(ParamStr(0));
   FormMinHeight:=550;
   FormMinWidth:=760;
+  StringDict:=TDictionary<string,string>.Create();
+  FloatDict:=TDictionary<string,float>.Create();
+  IntDict:=TDictionary<string,integer>.Create();
+  DecimalDict:=TDictionary<string,double>.Create();
 end;
 
 procedure TMainFrm.FormResize(Sender: TObject);
